@@ -41,7 +41,7 @@ function RoutingMap({ start, end }) {
                         minZoom={3}
                     />
 
-                    <Marker position={origin} maxZoom={18}>
+                    <Marker position={origin} zoom={18}>
                         <Popup>شروع</Popup>
                     </Marker>
 

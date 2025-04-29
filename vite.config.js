@@ -35,8 +35,13 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
+      },
+      workbox: {
+        modifyURLPrefix: {
+          '': './',
+        }
       }
     })
   ],
-  base: './'
+  base: './',
 })
