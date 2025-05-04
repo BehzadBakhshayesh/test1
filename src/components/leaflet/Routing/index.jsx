@@ -1,51 +1,78 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import RoutingMachine from './RoutingMachine';
 import L from 'leaflet';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import marker1 from "../../../assets/images/marker-icon-2x.png"
-import marker2 from "../../..//assets/images/marker-icon.png"
+import { useEffect, useState, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { useEffect, useState } from 'react';
-import './styles.css'
+import './styles.css';
+
+import customIcon from "../../../assets/images/marker-icon.png";
+
+const customIcon_start = new L.Icon({
+    iconUrl: customIcon,
+    // iconSize: [35, 35],
+    // iconAnchor: [17, 35],
+});
+const customIcon_end = new L.Icon({
+    iconUrl: customIcon,
+    // iconSize: [35, 35],
+    // iconAnchor: [17, 35],
+});
 
 delete L.Icon.Default.prototype._getIconUrl;
 
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: marker1,
-    iconUrl: marker2,
-});
+
+
 
 function RoutingMap({ start, end }) {
-    const [origin, setOrigin] = useState(start)
-    useEffect(() => {
-        const watchID = navigator.geolocation.watchPosition((position) => {
-            setOrigin([position.coords.latitude, position.coords.longitude]);
-        }, () => {
+    const [origin, setOrigin] = useState(start);
+    const markerRef = useRef(null);
+    const mapRef = useRef(null);
 
-        }, {
-            enableHighAccuracy: true,
-            maximumAge: 30000,
-            timeout: 27000,
-        });
-    }, [])
+    useEffect(() => {
+        const watchID = navigator.geolocation.watchPosition(
+            (position) => {
+                const newOrigin = [
+                    position.coords.latitude,
+                    position.coords.longitude,
+                ];
+                setOrigin(newOrigin);
+
+                if (markerRef.current) {
+                    markerRef.current.setLatLng(newOrigin);
+                    mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true, });
+                }
+
+            },
+            (err) => console.error(err),
+            {
+                enableHighAccuracy: true,
+                maximumAge: 30000,
+                timeout: 27000,
+            }
+        );
+
+        return () => navigator.geolocation.clearWatch(watchID);
+    }, []);
+
     return (
-        <div className='App'>
-            <div className='map-container'>
-                <MapContainer center={origin} zoom={18} style={{ height: '100%', width: '100%' }} keepBuffer={20} >
+        <div className="App">
+            <div className="map-container">
+                <MapContainer
+                    center={origin}
+                    zoom={18}
+                    style={{ height: '100%', width: '100%' }}
+                    whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
+                >
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        errorTileUrl="https://upload.wikimedia.org/wikipedia/commons/2/26/White_tile.png"
-                        maxZoom={18}
-                        minZoom={3}
-                    />
+                        attribution=""
 
-                    <Marker position={origin} zoom={18}>
+                    />
+                    <Marker position={origin} ref={markerRef} icon={customIcon_start}>
                         <Popup>شروع</Popup>
                     </Marker>
 
-                    <Marker position={end}>
+                    <Marker position={end} icon={customIcon_end}>
                         <Popup>پایان</Popup>
                     </Marker>
 
@@ -53,7 +80,7 @@ function RoutingMap({ start, end }) {
                 </MapContainer>
             </div>
         </div>
-    )
+    );
 }
 
 export default RoutingMap;

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 function RoutingMachine({ start, end }) {
   const map = useMap();
@@ -13,9 +14,7 @@ function RoutingMachine({ start, end }) {
     if (!routingControlRef.current) {
       routingControlRef.current = L.Routing.control({
         waypoints: [L.latLng(start[0], start[1]), L.latLng(end[0], end[1])],
-        lineOptions: {
-          styles: [{ color: "#1d7874", weight: 7 }],
-        },
+        lineOptions: { styles: [{ color: "#1d7874", weight: 9 }] },
         draggableWaypoints: false,
         addWaypoints: false,
         routeWhileDragging: false,
