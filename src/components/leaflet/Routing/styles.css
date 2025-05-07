@@ -33,3 +33,19 @@ html, body, #root {
 .rotating-icon {
     transition: transform 0.2s ease;
 }
+.start-marker {
+    width: 36px;
+    height: 36px;
+    background-color: #00c954; 
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  }
+  .end-marker {
+    width: 36px;
+    height: 36px;
+    background-color: #c9006f; 
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  }

@@ -7,20 +7,21 @@ import './styles.css';
 
 import customIcon from "../../../assets/images/marker-icon.png";
 
-const customIcon_start = new L.Icon({
-    iconUrl: customIcon,
-    // iconSize: [35, 35],
-    // iconAnchor: [17, 35],
+
+const customIcon_start = L.divIcon({
+    html: '<div class="start-marker"></div>',
+    className: 'start-circle-icon',
+    iconSize: [36, 36],
+    iconAnchor: [18, 18]
 });
-const customIcon_end = new L.Icon({
-    iconUrl: customIcon,
-    // iconSize: [35, 35],
-    // iconAnchor: [17, 35],
+const customIcon_end = L.divIcon({
+    html: '<div class="end-marker"></div>',
+    className: 'end-circle-icon',
+    iconSize: [36, 36],
+    iconAnchor: [18, 18]
 });
 
 delete L.Icon.Default.prototype._getIconUrl;
-
-
 
 
 function RoutingMap({ start, end }) {
