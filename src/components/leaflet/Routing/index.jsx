@@ -43,7 +43,7 @@ function RoutingMap({ start, end }) {
                 }
 
             },
-            (err) => console.error(err),
+            (err) => { console.error(err) },
             {
                 enableHighAccuracy: true,
                 maximumAge: 30000,
