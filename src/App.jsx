@@ -1,5 +1,6 @@
 
-// import OriginDestination from './components/leaflet/OriginDestination';
+import { useState } from 'react';
+import OriginDestination from './components/leaflet/OriginDestination';
 import RoutingMap from './components/leaflet/Routing';
 // import OriginDestination from "./components/maplibre/OriginDestination"
 // import OriginDestination from "./components/mapir/OriginDestination"
@@ -8,12 +9,20 @@ import RoutingMap from './components/leaflet/Routing';
 
 
 function App() {
+  const [activeTab, setActiveTab] = useState('originDestination');
 
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
-      {/* <OriginDestination /> */}
-      <RoutingMap start={[35.705145, 51.399099]} end={[35.699410, 51.337566]} />
+    <div style={{ width: '100%', height: '100%' }}>
+      <div className="tabs">
+        <button onClick={() => setActiveTab('originDestination')}>OriginDestination</button>
+        <button onClick={() => setActiveTab('routingMap')}>RoutingMap</button>
+      </div>
+      {activeTab === 'originDestination' ? (
+        <OriginDestination />
+      ) : (
+        <RoutingMap start={[35.705145, 51.399099]} end={[35.699410, 51.337566]} />
+      )}
     </div>
   )
 }
