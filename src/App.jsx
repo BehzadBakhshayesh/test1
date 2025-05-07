@@ -10,8 +10,6 @@ import RoutingMap from './components/leaflet/Routing';
 
 function App() {
   const [activeTab, setActiveTab] = useState('originDestination');
-
-
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <div className="tabs" style={{ width: '100%', display: "flex", gap: "10px", }}>
