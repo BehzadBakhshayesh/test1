@@ -11,14 +11,14 @@ import customIcon from "../../../assets/images/marker-icon.png";
 const customIcon_start = L.divIcon({
     html: '<div class="start-marker"></div>',
     className: 'start-circle-icon',
-    iconSize: [36, 36],
-    iconAnchor: [18, 18]
+    iconSize: [30, 30],
+    iconAnchor: [15, 15]
 });
 const customIcon_end = L.divIcon({
     html: '<div class="end-marker"></div>',
     className: 'end-circle-icon',
-    iconSize: [36, 36],
-    iconAnchor: [18, 18]
+    iconSize: [30, 30],
+    iconAnchor: [15, 15]
 });
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -70,11 +70,11 @@ function RoutingMap({ start, end }) {
 
                     />
                     <Marker position={origin} ref={markerRef} icon={customIcon_start}>
-                        <Popup>شروع</Popup>
+                        <Popup>موقعیت کنونی</Popup>
                     </Marker>
 
                     <Marker position={end} icon={customIcon_end}>
-                        <Popup>پایان</Popup>
+                        <Popup>میدان آزادی</Popup>
                     </Marker>
 
                     <RoutingMachine start={origin} end={end} />
