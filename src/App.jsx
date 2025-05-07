@@ -14,9 +14,9 @@ function App() {
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <div className="tabs">
-        <button onClick={() => setActiveTab('originDestination')}>OriginDestination</button>
-        <button onClick={() => setActiveTab('routingMap')}>RoutingMap</button>
+      <div className="tabs" style={{ width: '100%', display: "flex", gap: "10px", }}>
+        <button style={{ flex: "1", height: "50px" }} onClick={() => setActiveTab('originDestination')}>موقعیت فعلی</button>
+        <button style={{ flex: "1", height: "50px" }} onClick={() => setActiveTab('routingMap')}>مسیر یابی</button>
       </div>
       {activeTab === 'originDestination' ? (
         <OriginDestination />
