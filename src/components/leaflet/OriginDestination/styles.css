@@ -35,3 +35,28 @@ html, body, #root {
     height: 100%;
     z-index: 1;
 }
+
+.custom-marker {
+    width: 10px;
+    height: 10px;
+    background-color: #c90d00; 
+    border-radius: 50%;
+    border: 3px solid white;
+    outline: 3px solid rgb(23, 187, 23);
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        border-width: 3px;
+        outline-width: 3px;
+        opacity: 1;
+    }
+    100%{
+        border-width: 10px; 
+        outline-width: 10px;
+        opacity: 0; 
+    }
+  
+}

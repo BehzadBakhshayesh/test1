@@ -2,15 +2,21 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from 'react-le
 import { useState, useEffect, useRef } from 'react';
 import './styles.css'
 import L from 'leaflet';
-import marker1 from "../../../assets/images/marker-icon-2x.png"
-import marker2 from "../../../assets/images/marker-icon.png"
+// import marker1 from "../../../assets/images/marker-icon-2x.png"
+// import marker2 from "../../../assets/images/marker-icon.png"
 import { getUserLocation } from '../../../utils/getUserLocation';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: marker1,
-  iconUrl: marker2,
+// L.Icon.Default.mergeOptions({
+//   iconRetinaUrl: marker1,
+//   iconUrl: marker2,
+// });
+const customIcon = L.divIcon({
+  html: '<div class="custom-marker"></div>',
+  className: 'custom-circle-icon',
+  iconSize: [10, 10],
+  iconAnchor: [5, 5]
 });
 
 function ChangeView({ center, zoom }) {
@@ -72,6 +78,7 @@ function OriginDestination() {
           )}
 
           <Marker
+            icon={customIcon}
             position={position}
             draggable={true}
             eventHandlers={{

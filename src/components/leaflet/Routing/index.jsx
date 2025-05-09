@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
 
-import customIcon from "../../../assets/images/marker-icon.png";
+// import customIcon from "../../../assets/images/marker-icon.png";
 
 
 const customIcon_start = L.divIcon({
