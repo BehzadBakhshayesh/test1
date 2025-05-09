@@ -11,14 +11,14 @@ import './styles.css';
 const customIcon_start = L.divIcon({
     html: '<div class="start-marker"></div>',
     className: 'start-circle-icon',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15]
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
 });
 const customIcon_end = L.divIcon({
     html: '<div class="end-marker"></div>',
     className: 'end-circle-icon',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15]
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
 });
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -37,12 +37,10 @@ function RoutingMap({ start, end }) {
                     position.coords.longitude,
                 ];
                 setOrigin(newOrigin);
-
                 if (markerRef.current) {
                     markerRef.current.setLatLng(newOrigin);
                     mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true, });
                 }
-
             },
             (err) => { console.error(err) },
             {
@@ -60,23 +58,17 @@ function RoutingMap({ start, end }) {
             <div className="map-container">
                 <MapContainer
                     center={origin}
-                    zoom={18}
+                    zoom={17}
                     style={{ height: '100%', width: '100%' }}
                     whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
                 >
-                    <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        attribution=""
-
-                    />
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     <Marker position={origin} ref={markerRef} icon={customIcon_start}>
                         <Popup>موقعیت کنونی</Popup>
                     </Marker>
-
                     <Marker position={end} icon={customIcon_end}>
                         <Popup>میدان آزادی</Popup>
                     </Marker>
-
                     <RoutingMachine start={origin} end={end} />
                 </MapContainer>
             </div>

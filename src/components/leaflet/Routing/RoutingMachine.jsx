@@ -18,6 +18,7 @@ function RoutingMachine({ start, end }) {
         draggableWaypoints: false,
         addWaypoints: false,
         routeWhileDragging: false,
+        fitSelectedRoutes: false,
         show: false,
       }).addTo(map);
     } else {
