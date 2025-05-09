@@ -5,9 +5,6 @@ import { useEffect, useState, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
 
-// import customIcon from "../../../assets/images/marker-icon.png";
-
-
 const customIcon_start = L.divIcon({
     html: '<div class="start-marker"></div>',
     className: 'start-circle-icon',
@@ -22,7 +19,6 @@ const customIcon_end = L.divIcon({
 });
 
 delete L.Icon.Default.prototype._getIconUrl;
-
 
 function RoutingMap({ start, end }) {
     const [origin, setOrigin] = useState(start);
@@ -39,7 +35,7 @@ function RoutingMap({ start, end }) {
                 setOrigin(newOrigin);
                 if (markerRef.current) {
                     markerRef.current.setLatLng(newOrigin);
-                    mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true, });
+                    mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true });
                 }
             },
             (err) => { console.error(err) },
@@ -53,14 +49,20 @@ function RoutingMap({ start, end }) {
         return () => navigator.geolocation.clearWatch(watchID);
     }, []);
 
+    const handleResetZoom = () => {
+        mapRef.current.setView(origin, 17, { animate: true });
+    };
+
     return (
-        <div className="App">
+        <div className="routing-comopnent">
             <div className="map-container">
                 <MapContainer
                     center={origin}
                     zoom={17}
                     style={{ height: '100%', width: '100%' }}
-                    whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
+                    // whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
+                    whenReady={(mapInstance) => (mapRef.current = mapInstance.target)
+                    }
                 >
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     <Marker position={origin} ref={markerRef} icon={customIcon_start}>
@@ -71,6 +73,9 @@ function RoutingMap({ start, end }) {
                     </Marker>
                     <RoutingMachine start={origin} end={end} />
                 </MapContainer>
+                <button className="reset-zoom-btn" onClick={handleResetZoom}>
+                    بازگشت به موقعیت فعلی
+                </button>
             </div>
         </div>
     );
