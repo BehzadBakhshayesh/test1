@@ -21,7 +21,7 @@ function App() {
         {activeTab === 'originDestination' ? (
           <OriginDestination />
         ) : (
-          <RoutingMap start={[35.705145, 51.399099]} end={[35.699410, 51.337566]} />
+          <RoutingMap start={[35.705145, 51.399099]} end={[35.69982570505505, 51.337931156158454]} />
         )}</div>
     </div>
   )

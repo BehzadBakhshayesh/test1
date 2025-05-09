@@ -26,7 +26,7 @@ function ChangeView({ center, zoom }) {
 }
 
 function OriginDestination() {
-  const [position, setPosition] = useState([35.699410, 51.337566]);
+  const [position, setPosition] = useState([35.69982570505505, 51.337931156158454]);
 
   // ===============================================
   const [circleVisible, setCircleVisible] = useState(false);
@@ -50,9 +50,7 @@ function OriginDestination() {
           <ChangeView center={position} zoom={16} />
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-
           {circleVisible && (
             <Circle
               center={position}
