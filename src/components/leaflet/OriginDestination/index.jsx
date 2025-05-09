@@ -26,7 +26,7 @@ function ChangeView({ center, zoom }) {
 }
 
 function OriginDestination() {
-  const [position, setPosition] = useState([35.69982570505505, 51.337931156158454]);
+  const [position, setPosition] = useState([35.69974293407641, 51.33803844451905]);
 
   // ===============================================
   const [circleVisible, setCircleVisible] = useState(false);
