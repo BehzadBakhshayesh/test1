@@ -35,7 +35,7 @@ function RoutingMap({ start, end }) {
                 setOrigin(newOrigin);
                 if (markerRef.current) {
                     markerRef.current.setLatLng(newOrigin);
-                    mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true });
+                    // mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true });
                 }
             },
             (err) => { console.error(err) },
