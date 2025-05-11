@@ -18,7 +18,7 @@ const customIcon_end = L.divIcon({
     iconAnchor: [10, 10]
 });
 
-delete L.Icon.Default.prototype._getIconUrl;
+delete L.Icon.Default.prototype._getIconUrl
 
 function RoutingMap({ start, end }) {
     const [origin, setOrigin] = useState(start);
@@ -48,7 +48,6 @@ function RoutingMap({ start, end }) {
                 timeout: 27000,
             }
         );
-
         return () => navigator.geolocation.clearWatch(watchID);
     }, []);
 
@@ -73,7 +72,6 @@ function RoutingMap({ start, end }) {
                     // }}
                     whenReady={({ target: mapInstance }) => {
                         mapRef.current = mapInstance;
-
                         if (!mapInstance._movestartListenerAdded) {
                             mapInstance.on('movestart', () => {
                                 setFollowUser(false);

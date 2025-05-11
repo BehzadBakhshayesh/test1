@@ -1,12 +1,12 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from 'react-leaflet';
 import { useState, useEffect, useRef } from 'react';
 import './styles.css'
 import L from 'leaflet';
+delete L.Icon.Default.prototype._getIconUrl;
 // import marker1 from "../../../assets/images/marker-icon-2x.png"
 // import marker2 from "../../../assets/images/marker-icon.png"
 import { getUserLocation } from '../../../utils/getUserLocation';
 
-delete L.Icon.Default.prototype._getIconUrl;
+import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from 'react-leaflet';
 
 // L.Icon.Default.mergeOptions({
 //   iconRetinaUrl: marker1,
@@ -31,7 +31,6 @@ function OriginDestination() {
   // ===============================================
   const [circleVisible, setCircleVisible] = useState(false);
   const circleRef = useRef();
-
 
   const currentLocationHandler = () => {
     getUserLocation().then((location) => {
@@ -84,7 +83,10 @@ function OriginDestination() {
                 const marker = e.target;
                 const newPos = marker.getLatLng();
                 setPosition([newPos.lat, newPos.lng]);
-              }
+              },
+              click: () => {
+                console.log('marker clicked')
+              },
             }}
           >
             <Popup>
