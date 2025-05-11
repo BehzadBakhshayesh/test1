@@ -22,6 +22,7 @@ delete L.Icon.Default.prototype._getIconUrl;
 
 function RoutingMap({ start, end }) {
     const [origin, setOrigin] = useState(start);
+    const [followUser, setFollowUser] = useState(true);
     const markerRef = useRef(null);
     const mapRef = useRef(null);
 
@@ -35,7 +36,9 @@ function RoutingMap({ start, end }) {
                 setOrigin(newOrigin);
                 if (markerRef.current) {
                     markerRef.current.setLatLng(newOrigin);
-                    // mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true });
+                    if (followUser && mapRef.current) {
+                        mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true });
+                    }
                 }
             },
             (err) => { console.error(err) },
@@ -50,6 +53,7 @@ function RoutingMap({ start, end }) {
     }, []);
 
     const handleResetZoom = () => {
+        setFollowUser(true);
         mapRef.current.setView(origin, 17, { animate: true });
     };
 
@@ -61,8 +65,22 @@ function RoutingMap({ start, end }) {
                     zoom={17}
                     style={{ height: '100%', width: '100%' }}
                     // whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
-                    whenReady={(mapInstance) => (mapRef.current = mapInstance.target)
-                    }
+                    // whenReady={(mapInstance) => {
+                    //     mapRef.current = mapInstance.target
+                    //     mapInstance.target.on('movestart', () => {
+                    //         setFollowUser(false);
+                    //     })
+                    // }}
+                    whenReady={({ target: mapInstance }) => {
+                        mapRef.current = mapInstance;
+
+                        if (!mapInstance._movestartListenerAdded) {
+                            mapInstance.on('movestart', () => {
+                                setFollowUser(false);
+                            });
+                            mapInstance._movestartListenerAdded = true;
+                        }
+                    }}
                 >
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     <Marker position={origin} ref={markerRef} icon={customIcon_start}>
@@ -77,7 +95,7 @@ function RoutingMap({ start, end }) {
                     بازگشت به موقعیت فعلی
                 </button>
             </div>
-        </div>
+        </div >
     );
 }
 
