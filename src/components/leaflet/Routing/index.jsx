@@ -23,6 +23,7 @@ delete L.Icon.Default.prototype._getIconUrl
 function RoutingMap({ start, end }) {
     const [origin, setOrigin] = useState(start);
     const [followUser, setFollowUser] = useState(true);
+
     const markerRef = useRef(null);
     const mapRef = useRef(null);
 
@@ -49,11 +50,11 @@ function RoutingMap({ start, end }) {
             }
         );
         return () => navigator.geolocation.clearWatch(watchID);
-    }, []);
+    }, [followUser]);
 
     const handleResetZoom = () => {
-        setFollowUser(true);
         mapRef.current.setView(origin, 17, { animate: true });
+        setFollowUser(true);
     };
 
     return (
@@ -76,6 +77,9 @@ function RoutingMap({ start, end }) {
                             mapInstance.on('movestart', () => {
                                 setFollowUser(false);
                             });
+                            // mapInstance.on('move', () => {
+                            //     setFollowUser(false);
+                            // });
                             mapInstance._movestartListenerAdded = true;
                         }
                     }}
