@@ -2,9 +2,6 @@
 import { useState } from 'react';
 import OriginDestination from './components/leaflet/OriginDestination';
 import RoutingMap from './components/leaflet/Routing';
-// import OriginDestination from "./components/maplibre/OriginDestination"
-// import OriginDestination from "./components/mapir/OriginDestination"
-// import OriginDestination from "./components/openlayers/OriginDestination"
 import "./App.css"
 
 
