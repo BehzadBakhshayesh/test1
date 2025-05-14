@@ -64,13 +64,6 @@ function RoutingMap({ start, end }) {
                     center={origin}
                     zoom={17}
                     style={{ height: '100%', width: '100%' }}
-                    // whenCreated={(mapInstance) => (mapRef.current = mapInstance)}
-                    // whenReady={(mapInstance) => {
-                    //     mapRef.current = mapInstance.target
-                    //     mapInstance.target.on('movestart', () => {
-                    //         setFollowUser(false);
-                    //     })
-                    // }}
                     whenReady={({ target: mapInstance }) => {
                         mapRef.current = mapInstance;
                         if (!mapInstance._movestartListenerAdded) {

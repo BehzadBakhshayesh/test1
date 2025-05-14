@@ -10,7 +10,6 @@ function RoutingMachine({ start, end }) {
 
   useEffect(() => {
     if (!map || !start || !end) return;
-
     if (!routingControlRef.current) {
       routingControlRef.current = L.Routing.control({
         waypoints: [L.latLng(start[0], start[1]), L.latLng(end[0], end[1])],
