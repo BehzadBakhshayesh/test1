@@ -1,0 +1,69 @@
+@import "leaflet/dist/leaflet.css";
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.routing-comopnent{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+.map-container{
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.leaflet-control-attribution {
+    display: none;
+}
+
+.custom-icon-rotated {
+    transform: rotate(var(--angle)deg);
+  }
+.rotating-icon {
+    transition: transform 0.2s ease;
+}
+.start-marker {
+    width: 20px;
+    height: 20px;
+    background-color: #00c954; 
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  }
+  .end-marker {
+    width: 20px;
+    height: 20px;
+    background-color: #c9006f; 
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  }
+
+  .reset-zoom-btn {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    background-color: #1d7874;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000; 
+  }
+  
+  .reset-zoom-btn:hover {
+    background-color: #14615c;
+  }
