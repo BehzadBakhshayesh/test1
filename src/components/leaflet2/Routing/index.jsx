@@ -21,7 +21,7 @@ const customIcon_end = L.divIcon({
 delete L.Icon.Default.prototype._getIconUrl
 
 const MyMap = ({ origin, setOrigin, end, followUser, setFollowUser, }) => {
-
+    const markerRef = useRef(null);
     const map = useMapEvents({
         movestart() {
             setFollowUser(false);
@@ -31,7 +31,7 @@ const MyMap = ({ origin, setOrigin, end, followUser, setFollowUser, }) => {
 
         }
     })
-    const markerRef = useRef(null);
+
     useEffect(() => {
         const watchID = navigator.geolocation.watchPosition(
             (position) => {
@@ -67,7 +67,7 @@ const MyMap = ({ origin, setOrigin, end, followUser, setFollowUser, }) => {
         <RoutingMachine origin={origin} end={end} />
     </>
 }
-0
+
 const CurrentBtn = ({ origin, setFollowUser }) => {
     const map = useMap();
     const handleResetZoom = () => {
@@ -83,6 +83,9 @@ const CurrentBtn = ({ origin, setFollowUser }) => {
 function RoutingMap({ start, end }) {
     const [followUser, setFollowUser] = useState(true);
     const [origin, setOrigin] = useState(start);
+
+    console.log(followUser);
+
     return (
         <div className="routing-comopnent">
             <div className="map-container">
