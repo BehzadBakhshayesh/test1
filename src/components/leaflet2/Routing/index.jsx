@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import RoutingMachine from './RoutingMachine';
 import L from 'leaflet';
 import { useEffect, useState, useRef } from 'react';
@@ -20,13 +20,18 @@ const customIcon_end = L.divIcon({
 
 delete L.Icon.Default.prototype._getIconUrl
 
-function RoutingMap({ start, end }) {
-    const [origin, setOrigin] = useState(start);
-    const [followUser, setFollowUser] = useState(true);
+const MyMap = ({ origin, setOrigin, end, followUser, setFollowUser, }) => {
 
+    const map = useMapEvents({
+        movestart() {
+            setFollowUser(false);
+        },
+        load(e) {
+            console.log({ load: e });
+
+        }
+    })
     const markerRef = useRef(null);
-    const mapRef = useRef(null);
-
     useEffect(() => {
         const watchID = navigator.geolocation.watchPosition(
             (position) => {
@@ -37,8 +42,8 @@ function RoutingMap({ start, end }) {
                 setOrigin(newOrigin);
                 if (markerRef.current) {
                     markerRef.current.setLatLng(newOrigin);
-                    if (followUser && mapRef.current) {
-                        mapRef.current.setView(newOrigin, mapRef.current.getZoom(), { animate: true });
+                    if (followUser && map) {
+                        map.setView(newOrigin, map.getZoom(), { animate: true });
                     }
                 }
             },
@@ -52,11 +57,32 @@ function RoutingMap({ start, end }) {
         return () => navigator.geolocation.clearWatch(watchID);
     }, [followUser]);
 
+    return <>
+        <Marker position={origin} ref={markerRef} icon={customIcon_start}>
+            <Popup>موقعیت کنونی</Popup>
+        </Marker>
+        <Marker position={end} icon={customIcon_end}>
+            <Popup>میدان آزادی</Popup>
+        </Marker>
+        <RoutingMachine origin={origin} end={end} />
+    </>
+}
+0
+const CurrentBtn = ({ origin, setFollowUser }) => {
+    const map = useMap();
     const handleResetZoom = () => {
-        mapRef.current.setView(origin, 17, { animate: true });
+        map.setView(origin, 17, { animate: true });
         setFollowUser(true);
     };
-
+    return (
+        <button className="reset-zoom-btn" onClick={handleResetZoom}>
+            بازگشت به موقعیت فعلی
+        </button>
+    )
+}
+function RoutingMap({ start, end }) {
+    const [followUser, setFollowUser] = useState(true);
+    const [origin, setOrigin] = useState(start);
     return (
         <div className="routing-comopnent">
             <div className="map-container">
@@ -64,31 +90,12 @@ function RoutingMap({ start, end }) {
                     center={origin}
                     zoom={17}
                     style={{ height: '100%', width: '100%' }}
-                    whenReady={({ target: mapInstance }) => {
-                        mapRef.current = mapInstance;
-                        if (!mapInstance._movestartListenerAdded) {
-                            mapInstance.on('movestart', () => {
-                                setFollowUser(false);
-                            });
-                            // mapInstance.on('move', () => {
-                            //     setFollowUser(false);
-                            // });
-                            mapInstance._movestartListenerAdded = true;
-                        }
-                    }}
                 >
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    <Marker position={origin} ref={markerRef} icon={customIcon_start}>
-                        <Popup>موقعیت کنونی</Popup>
-                    </Marker>
-                    <Marker position={end} icon={customIcon_end}>
-                        <Popup>میدان آزادی</Popup>
-                    </Marker>
-                    <RoutingMachine start={origin} end={end} />
+                    <MyMap origin={origin} setOrigin={setOrigin} end={end} followUser={followUser} setFollowUser={setFollowUser} />
+                    <CurrentBtn setFollowUser={setFollowUser} origin={origin} />
                 </MapContainer>
-                <button className="reset-zoom-btn" onClick={handleResetZoom}>
-                    بازگشت به موقعیت فعلی
-                </button>
+
             </div>
         </div >
     );

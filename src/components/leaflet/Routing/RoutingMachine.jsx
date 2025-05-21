@@ -4,15 +4,15 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
-function RoutingMachine({ origin, end }) {
+function RoutingMachine({ start, end }) {
   const map = useMap();
   const routingControlRef = useRef(null);
 
   useEffect(() => {
-    if (!map || !origin || !end) return;
+    if (!map || !start || !end) return;
     if (!routingControlRef.current) {
       routingControlRef.current = L.Routing.control({
-        waypoints: [L.latLng(origin[0], origin[1]), L.latLng(end[0], end[1])],
+        waypoints: [L.latLng(start[0], start[1]), L.latLng(end[0], end[1])],
         lineOptions: { styles: [{ color: "#1d7874", weight: 9 }] },
         altLineOptions: { styles: [{ color: "#ff33cc", weight: 9 }] },
         draggableWaypoints: false,
@@ -46,11 +46,11 @@ function RoutingMachine({ origin, end }) {
       routingControlRef.current.on("lineclicked", (e) => { console.log("lineclicked", e); })
     } else {
       routingControlRef.current.setWaypoints([
-        L.latLng(origin[0], origin[1]),
+        L.latLng(start[0], start[1]),
         L.latLng(end[0], end[1]),
       ]);
     }
-  }, [origin, end, map]);
+  }, [start, end, map]);
 
   useEffect(() => {
     return () => {
